@@ -1,7 +1,7 @@
 // какой порядок вывода в console ?
 
-// microqueue = [];
-// tasksqueue = [];
+// microqueue = [promise, ];
+// tasksqueue = [setTimeout, setInterval, setTimeout];
 
 const intervalId = setInterval(() => {
   console.log('setInterval'); // 2 iteration 1 call | // 5 iteration 1 call
@@ -25,7 +25,7 @@ setTimeout(() => {
     });
 }, 10);
 
-const promise = new Promise((resolve, reject) => {
+const promise = new Promise( resolve => {
   resolve('then 1');
 });
 
@@ -37,13 +37,26 @@ promise
   .then((value) => {
     console.log(value); // 1 iteration 2 call
 
-    return new Promise((resolve, reject) => {
+    return new Promise( resolve => {
       setTimeout(resolve, 10, 'then 3');
     });
   })
   .then((value) => {
     console.log(value); // 4 iteration 1 call
   });
+
+/* 
+then 1
+then 2
+object Promise // WRONG
+setInterval
+setTimeout 1
+then 4
+... // WRONG
+... // WRONG
+setTimeout 2
+*/
+
 
 /*
 then 1
